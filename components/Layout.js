@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material/styles'
+import { createTheme } from "@mui/material/styles";
 import {
   AppBar,
   Box,
@@ -8,66 +8,66 @@ import {
   ThemeProvider,
   Toolbar,
   Typography,
-} from '@mui/material'
-import Head from 'next/head'
-import NextLink from 'next/link'
-import classes from '../utils/classes'
+} from "@mui/material";
+import Head from "next/head";
+import NextLink from "next/link";
+import classes from "../utils/classes";
 
-export default function Layout({title, description, children}) {
+export default function Layout({ title, description, children }) {
   const theme = createTheme({
     components: {
       MuiLink: {
         defaultProps: {
-          underline: 'hover',
+          underline: "hover",
         },
       },
     },
     typography: {
       h1: {
-        fontSize: '1.6rem',
+        fontSize: "1.6rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
       h2: {
-        fontSize: '1.4rem',
+        fontSize: "1.4rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
     },
     palette: {
-      mode: 'light',
+      mode: "light",
       primary: {
-        main: '#f0c000',
+        main: "#f0c040",
       },
       secondary: {
-        main: '#208080',
+        main: "#208080",
       },
     },
-  })
+  });
   return (
     <>
       <Head>
-        <title>{title ? `${title} - CEIQ Shop` : 'CEIQ Shop'}</title>
-        {description && <meta name='description' content={description}></meta>}
+        <title>{title ? `${title} - CEIQ Shop` : "CEIQ Shop"}</title>
+        {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position='static' sx={classes.appbar}>
+        <AppBar position="static" sx={classes.appbar}>
           <Toolbar sx={classes.toolbar}>
-            <NextLink href='/' passHref>
+            <NextLink href="/" passHref>
               <Link>
                 <Typography sx={classes.brand}>CEIQ Shop</Typography>
               </Link>
             </NextLink>
           </Toolbar>
         </AppBar>
-        <Container component='main' sx={classes.main}>
+        <Container component="main" sx={classes.main}>
           {children}
         </Container>
-        <Box component='footer' sx={classes.footer}>
+        <Box component="footer" sx={classes.footer}>
           <Typography>Todos los derechos reservador. CEIQ Shop.</Typography>
         </Box>
       </ThemeProvider>
     </>
-  )
+  );
 }
