@@ -21,8 +21,10 @@ import client from "../../utils/client";
 import { urlFor, urlForThumbnail } from "../../utils/image";
 import { Store } from "../../utils/Store";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function ProductScreen(props) {
+  const router = useRouter();
   const { slug } = props;
   const {
     state: { cart },
@@ -77,6 +79,8 @@ export default function ProductScreen(props) {
     enqueueSnackbar(`${product.name} añadido al carrito`, {
       variant: "success",
     });
+
+    router.push("/cart");
   };
 
   return (
