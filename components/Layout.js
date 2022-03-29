@@ -87,6 +87,13 @@ export default function Layout({ title, description, children }) {
                 checked={darkMode}
                 onChange={darkModeChangeHandler}
               ></Switch>
+
+              {/* Link de iniciar sesion */}
+              <NextLink href="/login" passHref>
+                <Link>Iniciar</Link>
+              </NextLink>
+
+              {/* link carrito con el badge */}
               <NextLink href="/cart" passHref>
                 <Link>
                   <Typography component="span">

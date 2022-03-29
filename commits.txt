@@ -1,0 +1,41 @@
+commit ab30f0e340f1430ea50c8a2e95cd4761a0e07313
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Tue Mar 29 17:33:25 2022 -0500
+
+    Anadido el badge del carrito
+
+commit 367a926329c8ba3b6ab79d8dc745a7eeab0ebc81
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Tue Mar 29 17:03:01 2022 -0500
+
+    Anadido el carrito de compras
+
+commit a802136baca3ef0d0c78dfb154dc340f72de5705
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Thu Mar 24 19:00:19 2022 -0500
+
+    Anadido el aviso de item an1adido
+
+commit 0fb4ba0eb02650560b5239e7a475c53a07c73a12
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Thu Mar 24 17:57:04 2022 -0500
+
+    Implementacion de Dark Mode
+
+commit 12f43372e3f76fdf3820642305aef048347b9661
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Thu Mar 24 15:57:54 2022 -0500
+
+    Detalle del producto
+
+commit 6cc32761e64ee9f761ec9320f108e558ec6f1a0d
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Wed Mar 23 20:42:59 2022 -0500
+
+    first commit
+
+commit 5b4618fc672d488d154b8089569779c5a7671c50
+Author: iblurdesigner <nevomen@gmail.com>
+Date:   Tue Mar 22 13:12:35 2022 -0500
+
+    Initial commit from Create Next App
