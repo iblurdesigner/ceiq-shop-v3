@@ -5,7 +5,7 @@ export default {
   fields: [
     {
       name: "name",
-      title: "Name",
+      title: "Nombre",
       type: "string",
     },
 
@@ -16,12 +16,12 @@ export default {
     },
     {
       name: "password",
-      title: "Password",
+      title: "Contraseña",
       type: "string",
     },
     {
       name: "isAdmin",
-      title: "Is Admin",
+      title: "Administrador",
       type: "boolean",
     },
   ],

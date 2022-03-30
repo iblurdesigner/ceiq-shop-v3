@@ -22,12 +22,13 @@ export default function RegisterScreen() {
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
   const router = useRouter();
+  const { redirect } = router.query;
 
   useEffect(() => {
     if (userInfo) {
-      router.push("/");
+      router.push(redirect || "/");
     }
-  }, [router, userInfo]);
+  }, [router, userInfo, redirect]);
 
   const {
     handleSubmit,
@@ -50,7 +51,7 @@ export default function RegisterScreen() {
       });
       dispatch({ type: "USER_LOGIN", payload: data });
       jsCookie.set("userInfo", JSON.stringify(data));
-      router.push("/");
+      router.push(redirect || "/");
     } catch (err) {
       enqueueSnackbar(getError(err), { variant: "error" });
     }
@@ -187,7 +188,7 @@ export default function RegisterScreen() {
           </ListItem>
           <ListItem>
             Ya tienes una cuenta?{" "}
-            <NextLink href={"/login"} passHref>
+            <NextLink href={`/login?redirect=${redirect || "/"}`} passHref>
               <Link>Iniciar</Link>
             </NextLink>
           </ListItem>
