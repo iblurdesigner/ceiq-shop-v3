@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Layout from "../components/Layout";
 import { useForm, Controller } from "react-hook-form";
 import NextLink from "next/link";
@@ -11,25 +11,56 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
+import { Store } from "../utils/Store";
+import axios from "axios";
+import jsCookie from "js-cookie";
+import { getError } from "../utils/error";
 
 export default function RegisterScreen() {
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push("/");
+    }
+  }, [router, userInfo]);
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
 
-  const submitHandler = async ({
-    name,
-    email,
-    password,
-    confirmPassword,
-  }) => {};
+  const { enqueueSnackbar } = useSnackbar();
+
+  const submitHandler = async ({ name, email, password, confirmPassword }) => {
+    if (password !== confirmPassword) {
+      enqueueSnackbar("Las constraseñas no son iguales", { variant: "error" });
+      return;
+    }
+    try {
+      const { data } = await axios.post("/api/users/register", {
+        name,
+        email,
+        password,
+      });
+      dispatch({ type: "USER_LOGIN", payload: data });
+      jsCookie.set("userInfo", JSON.stringify(data));
+      router.push("/");
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: "error" });
+    }
+  };
+
   return (
     <Layout title="Register">
       <Form onSubmit={handleSubmit(submitHandler)}>
         <Typography component="h1" variant="h1">
-          Register
+          Registro
         </Typography>
         <List>
           <ListItem>
@@ -46,7 +77,7 @@ export default function RegisterScreen() {
                   variant="outlined"
                   fullWidth
                   id="name"
-                  label="Name"
+                  label="Nombre"
                   inputProps={{ type: "name" }}
                   error={Boolean(errors.name)}
                   helperText={
@@ -105,7 +136,7 @@ export default function RegisterScreen() {
                   variant="outlined"
                   fullWidth
                   id="password"
-                  label="Password"
+                  label="Contraseña"
                   inputProps={{ type: "password" }}
                   error={Boolean(errors.password)}
                   helperText={
@@ -134,7 +165,7 @@ export default function RegisterScreen() {
                   variant="outlined"
                   fullWidth
                   id="confirmPassword"
-                  label="Confirm Password"
+                  label="Confirmar Contraseña"
                   inputProps={{ type: "password" }}
                   error={Boolean(errors.confirmPassword)}
                   helperText={

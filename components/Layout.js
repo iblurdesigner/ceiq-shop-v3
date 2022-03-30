@@ -3,9 +3,12 @@ import {
   AppBar,
   Badge,
   Box,
+  Button,
   Container,
   CssBaseline,
   Link,
+  Menu,
+  MenuItem,
   Switch,
   ThemeProvider,
   Toolbar,
@@ -14,13 +17,15 @@ import {
 import Head from "next/head";
 import NextLink from "next/link";
 import classes from "../utils/classes";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Store } from "../utils/Store";
 import jsCookie from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function Layout({ title, description, children }) {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
-  const { darkMode, cart } = state;
+  const { darkMode, cart, userInfo } = state;
 
   const theme = createTheme({
     components: {
@@ -65,6 +70,29 @@ export default function Layout({ title, description, children }) {
     jsCookie.set("darkMode", newDarkMode ? "ON" : "OFF");
   };
 
+  // Maneja el estado del MEnu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const loginMenuCloseHandler = (e, redirect) => {
+    setAnchorEl(null);
+    if (redirect) {
+      router.push(redirect);
+    }
+  };
+
+  // Cuando se da click en el menu, lo conecta con el anchor
+  const loginClickHandler = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  // Para cerrar sesion
+  const logoutClickHandler = () => {
+    setAnchorEl(null);
+    dispatch({ type: "USER_LOGOUT" });
+    jsCookie.remove("userInfo");
+    jsCookie.remove("cartItems");
+    router.push("/");
+  };
+
   return (
     <>
       <Head>
@@ -89,9 +117,38 @@ export default function Layout({ title, description, children }) {
               ></Switch>
 
               {/* Link de iniciar sesion */}
-              <NextLink href="/login" passHref>
-                <Link>Iniciar</Link>
-              </NextLink>
+              {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    sx={classes.navbarButton}
+                    onClick={loginClickHandler}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, "/profile")}
+                    >
+                      Perfil
+                    </MenuItem>
+                    <MenuItem onClick={logoutClickHandler}>
+                      Cerrar Sesión
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <NextLink href="/login" passHref>
+                  <Link>Ingresar</Link>
+                </NextLink>
+              )}
 
               {/* link carrito con el badge */}
               <NextLink href="/cart" passHref>
